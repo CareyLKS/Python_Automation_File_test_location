@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import shutil
 from typing import Optional
+from logger import log_move, log_skip
 
 def load_config() -> dict:
     with open("config.json","r") as f:
@@ -18,8 +19,10 @@ def get_folder_name(f_name: str, config: dict) -> Optional[str]:
     
 def move(src_path:Path, config:dict, dry:bool = False)->bool:
     if (src_path.suffix.lower() not in config['allowed_format']):
+        log_skip(src_path,"Invalid file type")
         return False
     if (src_path.suffix == '.crdownload'):
+        log_skip(src_path,"Not finished download")
         return False #Still downloading, don't move it
     folder_name=get_folder_name(src_path, config)
     if not folder_name:
@@ -38,9 +41,11 @@ def move(src_path:Path, config:dict, dry:bool = False)->bool:
         cnt+=1
     
     if dry:
-        print(f"Would move: {src_path} → {tar_path}")
+        #print(f"Would move: {src_path} → {tar_path}")
+        log_move(src_path,tar_path)
         return True
     
     shutil.move(str(src_path), str(tar_path)) #move
-    print(f"Moved: {src_path.name} → {tar_path.name}/")
+    # print(f"Moved: {src_path.name} → {tar_path.name}/")
+    log_move(src_path,tar_path)
     return True
