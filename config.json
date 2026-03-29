@@ -1,0 +1,9 @@
+{
+  "downloads_folder": "C:\\Users\\Carey Lee\\Carey\\Python_Automation_File_test_location",
+  "allowed_format": [".pdf", ".png", ".jpg", ".docx", ".pptx",".mp3", ".mp4",".zip"],
+  "course_aliases": {
+    "COMP": "COMP3211",
+    "CS": "CSCI3100",
+    "MATH": "MATH1010"
+  }
+}
